@@ -55,10 +55,11 @@ History of the old chats (lost with the 2026-11-01 Windows reinstall), read it f
   %USERPROFILE%, %APPDATA% or C:\ (the PC was reinstalled on 2026-11-01 and the old signing key was lost that way). Private files go in
   `.private\` (gitignored). Location: `D:\cloude project\my portfolio data\my-download-manager` (old copy `D:\cloude project\Mechano Download Manager` is outdated, v1.0.0).
 - Node.js is not installed system-wide; builds use `tools\node\node.exe` (v26.12.0, gitignored). v1.1.1 (new key) built + signed 2026-11-01,
-  copies in `D:\cloude project\Mechano Download Manager\02-final product\release\`. Source committed + pushed to `main` 2026-11-01;
-  GitHub release `v1.1.1` (Setup.exe, zip, version.json) NOT published yet.
+  copies in `D:\cloude project\Mechano Download Manager\02-final product\release\`. Source pushed to `main` (8140e4a) and
+  GitHub release `v1.1.1` published 2026-11-01 (Setup.exe, zip, version.json; live feed checked, signature OK).
 - Git 2.56 is installed. The repo folder is owned by the old Windows user, so run git as `git -c safe.directory=* ...`
-  (or Eslam adds a global safe.directory). `gh` CLI is not installed: make releases on github.com or ask before installing it.
-  GitHub repo `Mechano0/Mechano-download-manager` (releases v1.0.0 ... v1.1.0 published).
+  (or Eslam adds a global safe.directory). GitHub CLI: `C:\Program Files\GitHub CLI\gh.exe` (logged in as Mechano0).
+  Releases: `gh release create v<ver> -R Mechano0/Mechano-download-manager` with assets named with dots (copy them first).
+  GitHub repo `Mechano0/Mechano-download-manager` (releases v1.0.0 ... v1.1.1 published; old lowercase URL redirects).
 - No DRM bypass. Don't download files/tools without asking. PowerShell 5.1: keep .ps1 files ASCII (Arabic text goes in separate UTF-8 files).
 - csc is C# 5: no `$""`, `?.`, `nameof`, `out var`.
