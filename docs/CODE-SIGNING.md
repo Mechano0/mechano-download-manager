@@ -42,5 +42,5 @@ before it is packed, then `Uninstall.exe` and `Setup.exe`, with SHA-256 and a ti
 
 1. Bump the version in `package.json`.
 2. Build and code-sign (`build-setup.ps1 -Rebuild -SignThumbprint …`, or the SignPath workflow).
-3. `node tools/sign-release.js --notes "..."` (the Ed25519 update signature; the key stays in `%USERPROFILE%\.mechano-dm\`).
+3. `node tools/sign-release.js --notes "..."` (the Ed25519 update signature; the key is `.private\update-signing-key.pem` inside the program folder, gitignored; keep a backup copy off this PC).
 4. Upload `Mechano.DM.Setup.exe`, `Mechano.DM.zip` and `version.json` to the GitHub release.

@@ -27,7 +27,10 @@ Remove-Item (Join-Path $out 'assets\logo-source.png') -ErrorAction SilentlyConti
 $lic = Join-Path $out 'licenses'
 New-Item -ItemType Directory -Force $lic, (Join-Path $out 'runtime') | Out-Null
 
-$node = (Get-Command node).Source
+# Node.js: the one on PATH, else the copy kept inside this folder (tools\node\node.exe, gitignored)
+$nodeCmd = Get-Command node -ErrorAction SilentlyContinue
+if ($nodeCmd) { $node = $nodeCmd.Source } else { $node = Join-Path $root 'tools\node\node.exe' }
+if (-not (Test-Path $node)) { throw 'node.exe not found: install Node.js or put node.exe in tools\node\' }
 Copy-Item $node (Join-Path $out 'runtime\node.exe')
 $nodeLic = Join-Path (Split-Path $node) 'LICENSE'
 if (Test-Path $nodeLic) { Copy-Item $nodeLic (Join-Path $lic 'Node.js-LICENSE.txt') }

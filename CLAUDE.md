@@ -1,6 +1,10 @@
 # Mechano Download Manager (MDM)
 
 IDM-style download manager for Windows. Owner: Eslam (talks in Egyptian Arabic; answer in Arabic, keep replies short).
+Eslam's working rule: when he sends a message, first reply saying what you will do, then start.
+
+History of the old chats (lost with the 2026-11-01 Windows reinstall), read it first:
+@CHAT_SUMMARY.md
 
 ## Layout
 - `Mechano DM.exe` — the Windows program (source `desktop/MechanoDM.cs`, C# 5 / .NET Framework 4, WinForms + WebView2 from `lib/`).
@@ -13,8 +17,9 @@ IDM-style download manager for Windows. Owner: Eslam (talks in Egyptian Arabic; 
   Facebook sd/hd: `probeMp4` reads their size from the first 256 KB; quality values `360:sd` pick them by id. The extension prefetches qualities after 2 s on a video.
   New (v1.1): `src/media.js` (fast video: yt-dlp finds URLs, our engine downloads, ffmpeg joins; falls back to plain yt-dlp), `src/torrent.js`
   (aria2c `bin\aria2c.exe` over JSON-RPC, random port+secret), `src/grabber.js` (Site Grabber), `src/preview.js` (play while downloading),
-  `src/selfupdate.js` (signed version.json from GitHub releases; Ed25519 public key inside; private key `%USERPROFILE%\.mechano-dm\update-signing-key.pem`,
-  never in the repo; Mechano DM.exe runs the verified Setup `/silent /dir=`). Clipboard monitor: C# `ClipboardWatcher` → `/api/clipboard`.
+  `src/selfupdate.js` (signed version.json from GitHub releases; Ed25519 public key inside; private key `.private\update-signing-key.pem`
+  in THIS folder, gitignored, never in the repo; Mechano DM.exe runs the verified Setup `/silent /dir=`). Key 2 since 2026-11-01: key 1 was lost
+  in a Windows reinstall (it lived in %USERPROFILE%), so copies up to v1.1.0 reject newer releases and must install v1.1.1 by hand once. Clipboard monitor: C# `ClipboardWatcher` → `/api/clipboard`.
 - Taskbar icon: `desktop/ShellProps.cs` (compiled into both exes) stamps AppUserModelID `Mechano.DownloadManager` on shortcuts (Setup, and
   the app fixes old ones at start) and on windows (relaunch icon/name), otherwise Windows shows a blank taskbar icon.
 - Floating window: ⧉ Float on a running job → page posts `{type:'float',id}` → C# `FloatForm` (TopMost, tool window, bottom-right)
@@ -46,5 +51,14 @@ IDM-style download manager for Windows. Owner: Eslam (talks in Egyptian Arabic; 
 - Shortcuts: `desktop\install-shortcut.ps1`. Icons: `node assets/build-icon.js <ffmpeg>` from `assets/logo-source.png`.
 
 ## Rules
+- **Everything the project needs stays inside this folder** (Eslam's rule): keys, notes, tools, build inputs. Never store project files in
+  %USERPROFILE%, %APPDATA% or C:\ (the PC was reinstalled on 2026-11-01 and the old signing key was lost that way). Private files go in
+  `.private\` (gitignored). Location: `D:\cloude project\my portfolio data\my-download-manager` (old copy `D:\cloude project\Mechano Download Manager` is outdated, v1.0.0).
+- Node.js is not installed system-wide; builds use `tools\node\node.exe` (v26.12.0, gitignored). v1.1.1 (new key) built + signed 2026-11-01,
+  copies in `D:\cloude project\Mechano Download Manager\02-final product\release\`. Source committed + pushed to `main` 2026-11-01;
+  GitHub release `v1.1.1` (Setup.exe, zip, version.json) NOT published yet.
+- Git 2.56 is installed. The repo folder is owned by the old Windows user, so run git as `git -c safe.directory=* ...`
+  (or Eslam adds a global safe.directory). `gh` CLI is not installed: make releases on github.com or ask before installing it.
+  GitHub repo `Mechano0/Mechano-download-manager` (releases v1.0.0 ... v1.1.0 published).
 - No DRM bypass. Don't download files/tools without asking. PowerShell 5.1: keep .ps1 files ASCII (Arabic text goes in separate UTF-8 files).
 - csc is C# 5: no `$""`, `?.`, `nameof`, `out var`.

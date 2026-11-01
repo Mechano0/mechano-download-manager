@@ -6,11 +6,11 @@
  *
  *   node tools/sign-release.js [--notes "What changed"] [--key <path to .pem>]
  *
- * Default key: %USERPROFILE%\.mechano-dm\update-signing-key.pem (never put it in the repository).
+ * Default key: .private\update-signing-key.pem inside this program folder (gitignored: it is never uploaded,
+ * and build-portable.ps1 does not copy it). Keep a backup copy on a USB stick / cloud drive.
  * Upload dist/version.json next to "Mechano.DM.Setup.exe" in the GitHub release.
  */
 const fs = require('node:fs');
-const os = require('node:os');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { signedText, verifyManifest } = require('../src/selfupdate');
@@ -19,7 +19,8 @@ const root = path.join(__dirname, '..');
 const args = process.argv.slice(2);
 const opt = (name, def) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : def; };
 
-const keyPath = opt('--key', path.join(os.homedir(), '.mechano-dm', 'update-signing-key.pem'));
+const keyPath = opt('--key', path.join(root, '.private', 'update-signing-key.pem'));
+if (!fs.existsSync(keyPath)) throw new Error(`Signing key not found: ${keyPath}`);
 const version = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).version;
 const setupFile = path.join(root, 'dist', 'Mechano DM Setup.exe');
 const assetName = 'Mechano.DM.Setup.exe'; // GitHub turns the spaces into dots

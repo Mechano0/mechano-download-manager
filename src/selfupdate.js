@@ -18,7 +18,10 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const { EventEmitter } = require('node:events');
 
-const PUBLIC_KEY = 'MCowBQYDK2VwAyEA2rxQZf4ACUZPoHx1puucM1enPjdte7Fb7xKGPT4v1rM=';
+// Key 2 (2026-11-01). Key 1 (MCowBQYDK2VwAyEA2rxQZf4...) was lost with a Windows reinstall, so copies up to
+// v1.1.0 cannot verify releases signed with this key: those users install v1.1.1 by hand once.
+// Private key: .private\update-signing-key.pem inside this program folder (gitignored, never in the repo).
+const PUBLIC_KEY = 'MCowBQYDK2VwAyEAaDbetBBYmGLne7vs3P+thZ2kUqaOjVGpnWkSHa+AQoE=';
 const FEED = 'https://github.com/Mechano0/mechano-download-manager/releases/latest/download/version.json';
 const RELEASES = 'https://github.com/Mechano0/mechano-download-manager/releases/latest';
 const APP_DIR = path.join(__dirname, '..');

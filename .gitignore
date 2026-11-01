@@ -1,6 +1,10 @@
 # Personal data: settings, private token, history, cookies, logs. Never upload.
 data/
 
+# Update signing key (private). Never upload.
+.private/
+*.pem
+
 # Build output (the Setup and the portable zip go to GitHub Releases instead)
 dist/
 /Mechano DM.exe
@@ -18,7 +22,9 @@ node_modules/
 
 # Private research notes
 docs/IDM-ANALYSIS.md
+CHAT_SUMMARY.md
 
 tools/ffmpeg/out/
+tools/node/
 tools/ffmpeg/work/
 bin/yt-dlp/
